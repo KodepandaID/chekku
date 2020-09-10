@@ -55,6 +55,16 @@ func (r Rules) IsArray(fieldName string, v reflect.Value) error {
 	}
 }
 
+// IsBool to check value is a boolean or not
+func (r Rules) IsBool(fieldName string, v reflect.Value) error {
+	switch v.Kind() {
+	case reflect.Bool:
+		return nil
+	default:
+		return fmt.Errorf("\"isBool\", %v must be a boolean", fieldName)
+	}
+}
+
 // IsIPv4 to check values is ipv4 or not
 func (r Rules) IsIPv4(fieldName string, v reflect.Value) error {
 	switch v.Kind() {
@@ -112,5 +122,33 @@ func (r Rules) IsNumeric(fieldName string, v reflect.Value) error {
 		}
 
 		return nil
+	}
+}
+
+// IsAlpha to check values is alpha or not
+func (r Rules) IsAlpha(fieldName string, v reflect.Value) error {
+	switch v.Kind() {
+	case reflect.String:
+		if !alphaRegex.MatchString(v.String()) {
+			return fmt.Errorf("\"isAlpha\", %v value must be the Aa - Zz", fieldName)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"isAlpha\", %v value must be string", fieldName)
+	}
+}
+
+// IsAlphanumeric to check values is alphanumeric or not
+func (r Rules) IsAlphanumeric(fieldName string, v reflect.Value) error {
+	switch v.Kind() {
+	case reflect.String:
+		if !alphaNumericRegex.MatchString(v.String()) {
+			return fmt.Errorf("\"isAlphanumeric\", %v value must be the combination words and numbers", fieldName)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"isAlphanumeric\", %v value must be string", fieldName)
 	}
 }
