@@ -40,10 +40,8 @@ func TestIsNumericValidWithTextnumericInteger(t *testing.T) {
 		return
 	}
 
-	if !assert.Equal(t, e.Error(), `"isNumeric", numeric must be a numeric`) {
-		t.Error("isNumeric shoud be invalid")
-		return
-	}
+	t.Error("isNumeric shoud be invalid")
+	return
 }
 
 func TestIsNumericValidWithTextnumericFloat(t *testing.T) {
@@ -59,10 +57,8 @@ func TestIsNumericValidWithTextnumericFloat(t *testing.T) {
 		return
 	}
 
-	if !assert.Equal(t, e.Error(), `"isNumeric", numeric must be a numeric`) {
-		t.Error("isNumeric shoud be invalid")
-		return
-	}
+	t.Error("isNumeric shoud be invalid")
+	return
 }
 
 func TestIsNumericValidWithInteger(t *testing.T) {
@@ -78,10 +74,8 @@ func TestIsNumericValidWithInteger(t *testing.T) {
 		return
 	}
 
-	if !assert.Equal(t, e.Error(), `"isNumeric", numeric must be a numeric`) {
-		t.Error("isNumeric shoud be invalid")
-		return
-	}
+	t.Error("isNumeric shoud be valid")
+	return
 }
 
 func TestIsNumericValidWithFloat(t *testing.T) {
@@ -97,8 +91,6 @@ func TestIsNumericValidWithFloat(t *testing.T) {
 		return
 	}
 
-	if !assert.Equal(t, e.Error(), `"isNumeric", numeric must be a numeric`) {
-		t.Error("isNumeric shoud be invalid")
-		return
-	}
+	t.Error("isNumeric shoud be valid")
+	return
 }

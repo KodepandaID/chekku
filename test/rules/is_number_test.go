@@ -60,10 +60,8 @@ func TestIsNumberValidWithFloat(t *testing.T) {
 		return
 	}
 
-	if assert.Equal(t, e.Error(), `"isNumber", number must be a number`) {
-		t.Error("isNumber shoud be invalid")
-		return
-	}
+	t.Error("isNumber shoud be valid")
+	return
 }
 
 func TestIsNumberValidWithInteger(t *testing.T) {
@@ -79,8 +77,6 @@ func TestIsNumberValidWithInteger(t *testing.T) {
 		return
 	}
 
-	if assert.Equal(t, e.Error(), `"isNumber", number must be a number`) {
-		t.Error("isNumber shoud be invalid")
-		return
-	}
+	t.Error("isNumber shoud be valid")
+	return
 }

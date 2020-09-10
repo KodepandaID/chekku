@@ -120,10 +120,8 @@ func TestIsIPv4Valid(t *testing.T) {
 		return
 	}
 
-	if !assert.Equal(t, e.Error(), `"isIPv4", ip value must be ip address version 4`) {
-		t.Error("isIPv4 shoud be invalid")
-		return
-	}
+	t.Error("isIPv4 shoud be valid")
+	return
 }
 
 func TestIsIPv4ValidSecond(t *testing.T) {
@@ -139,8 +137,6 @@ func TestIsIPv4ValidSecond(t *testing.T) {
 		return
 	}
 
-	if !assert.Equal(t, e.Error(), `"isIPv4", ip value must be ip address version 4`) {
-		t.Error("isIPv4 shoud be invalid")
-		return
-	}
+	t.Error("isIPv4 shoud be valid")
+	return
 }

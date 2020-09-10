@@ -54,8 +54,8 @@ func TestIsAlphaValid(t *testing.T) {
 			return
 		}
 
-		if !assert.Equal(t, e.Error(), `"isAlpha", alpha value must be the Aa - Zz`) {
-			t.Error("isAlpha shoud be invalid")
+		if assert.Equal(t, e.Error(), `"isAlpha", alpha value must be the Aa - Zz`) {
+			t.Error("isAlpha shoud be valid")
 			return
 		}
 	}

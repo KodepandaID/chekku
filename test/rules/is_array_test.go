@@ -60,10 +60,8 @@ func TestIsArrayValid(t *testing.T) {
 		return
 	}
 
-	if !assert.Equal(t, e.Error(), `"isArray", array must be an array or slice`) {
-		t.Error("isArray shoud be invalid")
-		return
-	}
+	t.Error("isArray shoud be valid")
+	return
 }
 
 func TestIsArrayValidWithSlice(t *testing.T) {
@@ -79,8 +77,6 @@ func TestIsArrayValidWithSlice(t *testing.T) {
 		return
 	}
 
-	if !assert.Equal(t, e.Error(), `"isArray", array must be an array or slice`) {
-		t.Error("isArray shoud be invalid")
-		return
-	}
+	t.Error("isArray shoud be valid")
+	return
 }

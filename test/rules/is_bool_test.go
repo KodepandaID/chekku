@@ -60,10 +60,8 @@ func TestIsBoolValidTrue(t *testing.T) {
 		return
 	}
 
-	if !assert.Equal(t, e.Error(), `"isBool", boolean must be a boolean`) {
-		t.Error("isBool shoud be invalid")
-		return
-	}
+	t.Error("isBool shoud be invalid")
+	return
 }
 
 func TestIsBoolValidFalse(t *testing.T) {
@@ -79,8 +77,6 @@ func TestIsBoolValidFalse(t *testing.T) {
 		return
 	}
 
-	if !assert.Equal(t, e.Error(), `"isBool", boolean must be a boolean`) {
-		t.Error("isBool shoud be invalid")
-		return
-	}
+	t.Error("isBool shoud be valid")
+	return
 }

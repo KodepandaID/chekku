@@ -77,8 +77,8 @@ func TestIsAlphanumericValid(t *testing.T) {
 			return
 		}
 
-		if !assert.Equal(t, e.Error(), `"isAlphanumeric", alphanumeric value must be the combination words and numbers`) {
-			t.Error("isAlphanumeric shoud be invalid")
+		if assert.Equal(t, e.Error(), `"isAlphanumeric", alphanumeric value must be the combination words and numbers`) {
+			t.Error("isAlphanumeric shoud be valid")
 			return
 		}
 	}
