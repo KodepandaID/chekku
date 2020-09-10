@@ -129,11 +129,7 @@ func TestIsIPv6ValidIP(t *testing.T) {
 			ip: v,
 		})
 
-		if e == nil {
-			return
-		}
-
-		if assert.Equal(t, e.Error(), `"isIPv6", ip value must be ip address version 6`) {
+		if e != nil {
 			t.Error("isIPv6 shoud be valid")
 			return
 		}

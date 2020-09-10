@@ -73,11 +73,7 @@ func TestIsAlphanumericValid(t *testing.T) {
 			alphanumeric: v,
 		})
 
-		if e == nil {
-			return
-		}
-
-		if assert.Equal(t, e.Error(), `"isAlphanumeric", alphanumeric value must be the combination words and numbers`) {
+		if e != nil {
 			t.Error("isAlphanumeric shoud be valid")
 			return
 		}
