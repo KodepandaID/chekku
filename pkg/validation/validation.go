@@ -27,7 +27,7 @@ func Parse(values reflect.Value) []Data {
 			FieldName:  t.Field(i).Name,
 			FieldType:  t.Field(i).Type,
 			FieldValue: values.Field(i),
-			FieldTag:   strings.Split(t.Field(i).Tag.Get("gopal"), ","),
+			FieldTag:   strings.Split(t.Field(i).Tag.Get("chekku"), ","),
 		})
 	}
 
