@@ -21,8 +21,7 @@ const (
 	e164RegexString                  = "^\\+[1-9]?[0-9]{7,14}$"
 	base64RegexString                = "^(?:[A-Za-z0-9+\\/]{4})*(?:[A-Za-z0-9+\\/]{2}==|[A-Za-z0-9+\\/]{3}=|[A-Za-z0-9+\\/]{4})$"
 	base64URLRegexString             = "^(?:[A-Za-z0-9-_]{4})*(?:[A-Za-z0-9-_]{2}==|[A-Za-z0-9-_]{3}=|[A-Za-z0-9-_]{4})$"
-	iSBN10RegexString                = "^(?:[0-9]{9}X|[0-9]{10})$"
-	iSBN13RegexString                = "^(?:(?:97(?:8|9))[0-9]{10})$"
+	iSBNRegexString                  = "ISBN[\x20\x2D]{0,1}(?:13[\x20\x2D]{0,1}){0,1}"
 	uUID3RegexString                 = "^[0-9a-f]{8}-[0-9a-f]{4}-3[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$"
 	uUID4RegexString                 = "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
 	uUID5RegexString                 = "^[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
@@ -70,8 +69,7 @@ var (
 	emailRegex                 = regexp.MustCompile(emailRegexString)
 	base64Regex                = regexp.MustCompile(base64RegexString)
 	base64URLRegex             = regexp.MustCompile(base64URLRegexString)
-	iSBN10Regex                = regexp.MustCompile(iSBN10RegexString)
-	iSBN13Regex                = regexp.MustCompile(iSBN13RegexString)
+	iSBNRegex                  = regexp.MustCompile(iSBNRegexString)
 	uUID3Regex                 = regexp.MustCompile(uUID3RegexString)
 	uUID4Regex                 = regexp.MustCompile(uUID4RegexString)
 	uUID5Regex                 = regexp.MustCompile(uUID5RegexString)

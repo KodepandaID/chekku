@@ -65,6 +65,68 @@ func (r Rules) IsBool(fieldName string, v reflect.Value) error {
 	}
 }
 
+// IsInt to check value is a integer like int, int6, int8, int16, int32 or int64
+func (r Rules) IsInt(fieldName string, v reflect.Value) error {
+	switch v.Kind() {
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		return nil
+	default:
+		return fmt.Errorf("\"isInt\", %v must be an integer", fieldName)
+	}
+}
+
+// IsFloat to check value is a float32 or float64
+func (r Rules) IsFloat(fieldName string, v reflect.Value) error {
+	switch v.Kind() {
+	case reflect.Float32, reflect.Float64:
+		return nil
+	default:
+		return fmt.Errorf("\"isFloat\", %v must be a float", fieldName)
+	}
+}
+
+// IsUUID to check values is uuid, uuid3, uuid4 or uuid5
+func (r Rules) IsUUID(fieldName string, v reflect.Value) error {
+	switch v.Kind() {
+	case reflect.String:
+		if !uUIDRegex.MatchString(v.String()) && !uUID3Regex.MatchString(v.String()) && !uUID4Regex.MatchString(v.String()) && !uUID5Regex.MatchString(v.String()) {
+			return fmt.Errorf("\"isUUID\", %v must be an UUID", fieldName)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"isUUID\", %v value must be string", fieldName)
+	}
+}
+
+// IsISBN to check values is ISBN or not
+func (r Rules) IsISBN(fieldName string, v reflect.Value) error {
+	switch v.Kind() {
+	case reflect.String:
+		if !iSBNRegex.MatchString(v.String()) {
+			return fmt.Errorf("\"isISBN\", %v value must be ISBN", fieldName)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"isISBN\", %v value must be string", fieldName)
+	}
+}
+
+// IsBase64 to check values is base64 or not
+func (r Rules) IsBase64(fieldName string, v reflect.Value) error {
+	switch v.Kind() {
+	case reflect.String:
+		if !base64Regex.MatchString(v.String()) {
+			return fmt.Errorf("\"isBase64\", %v value must be base64", fieldName)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"isBase64\", %v value must be string", fieldName)
+	}
+}
+
 // IsIPv4 to check values is ipv4 or not
 func (r Rules) IsIPv4(fieldName string, v reflect.Value) error {
 	switch v.Kind() {
@@ -150,5 +212,59 @@ func (r Rules) IsAlphanumeric(fieldName string, v reflect.Value) error {
 		return nil
 	default:
 		return fmt.Errorf("\"isAlphanumeric\", %v value must be string", fieldName)
+	}
+}
+
+// IsEmail to check values is email address or not
+func (r Rules) IsEmail(fieldName string, v reflect.Value) error {
+	switch v.Kind() {
+	case reflect.String:
+		if !emailRegex.MatchString(v.String()) {
+			return fmt.Errorf("\"isEmail\", %v value must be an email address", fieldName)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"isEmail\", %v value must be string", fieldName)
+	}
+}
+
+// IsLatitude to check values is geo latitude or not
+func (r Rules) IsLatitude(fieldName string, v reflect.Value) error {
+	switch v.Kind() {
+	case reflect.Float32, reflect.Float64:
+		if !latitudeRegex.MatchString(fmt.Sprintf("%v", v)) {
+			return fmt.Errorf("\"isLatitude\", %v value must be the geolocation Latitude", fieldName)
+		}
+
+		return nil
+	case reflect.String:
+		if !latitudeRegex.MatchString(v.String()) {
+			return fmt.Errorf("\"isLatitude\", %v value must be the geolocation Latitude", fieldName)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"isLatitude\", %v value must be float or string", fieldName)
+	}
+}
+
+// IsLongitude to check values is geo longitude or not
+func (r Rules) IsLongitude(fieldName string, v reflect.Value) error {
+	switch v.Kind() {
+	case reflect.Float32, reflect.Float64:
+		if !longitudeRegex.MatchString(fmt.Sprintf("%v", v)) {
+			return fmt.Errorf("\"isLongitude\", %v value must be the geolocation Longitude", fieldName)
+		}
+
+		return nil
+	case reflect.String:
+		if !longitudeRegex.MatchString(v.String()) {
+			return fmt.Errorf("\"isLongitude\", %v value must be the geolocation Longitude", fieldName)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"isLongitude\", %v value must be float or string", fieldName)
 	}
 }
