@@ -41,12 +41,25 @@ func Validate(inputs interface{}) error {
 
 	r := rules.Rules{}
 	for _, v := range d {
-		for _, m := range v.FieldTag {
-			params := make([]reflect.Value, 2)
-			params[0] = reflect.ValueOf(v.FieldName)
-			params[1] = reflect.ValueOf(v.FieldValue)
+		for _, tag := range v.FieldTag {
+			var result []reflect.Value
+			tagVar := strings.Split(tag, ":")
 
-			result := reflect.ValueOf(r).MethodByName(strings.Title(m)).Call(params)
+			if len(tagVar) > 1 {
+				params := make([]reflect.Value, 3)
+				params[0] = reflect.ValueOf(v.FieldName)
+				params[1] = reflect.ValueOf(v.FieldValue)
+				params[2] = reflect.ValueOf(tagVar[1])
+
+				result = reflect.ValueOf(r).MethodByName(strings.Title(tagVar[0])).Call(params)
+			} else {
+				params := make([]reflect.Value, 2)
+				params[0] = reflect.ValueOf(v.FieldName)
+				params[1] = reflect.ValueOf(v.FieldValue)
+
+				result = reflect.ValueOf(r).MethodByName(strings.Title(tag)).Call(params)
+			}
+
 			if e := result[0].Interface(); e != nil {
 				return fmt.Errorf("%v", e)
 			}

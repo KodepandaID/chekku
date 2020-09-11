@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"reflect"
+	"strconv"
 	"time"
 )
 
@@ -284,5 +285,35 @@ func (r Rules) IsLongitude(fieldName string, v reflect.Value) error {
 		return nil
 	default:
 		return fmt.Errorf("\"isLongitude\", %v value must be float or string", fieldName)
+	}
+}
+
+// MinLength to check string values that have char length minimal
+func (r Rules) MinLength(fieldName string, v reflect.Value, m string) error {
+	switch v.Kind() {
+	case reflect.String:
+		min, _ := strconv.Atoi(m)
+		if len(v.String()) < min {
+			return fmt.Errorf("\"minLength\", %v value length must be more than %v", fieldName, min)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"minLength\", %v value must be string", fieldName)
+	}
+}
+
+// MaxLength to check string values that have char length maximal
+func (r Rules) MaxLength(fieldName string, v reflect.Value, m string) error {
+	switch v.Kind() {
+	case reflect.String:
+		max, _ := strconv.Atoi(m)
+		if len(v.String()) > max {
+			return fmt.Errorf("\"maxLength\", %v value length should not be more than %v", fieldName, max)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"maxLength\", %v value must be string", fieldName)
 	}
 }
