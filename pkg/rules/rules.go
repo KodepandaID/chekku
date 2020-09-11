@@ -117,7 +117,7 @@ func (r Rules) IsISBN(fieldName string, v reflect.Value) error {
 func (r Rules) IsBase64(fieldName string, v reflect.Value) error {
 	switch v.Kind() {
 	case reflect.String:
-		if !base64Regex.MatchString(v.String()) {
+		if !base64Regex.MatchString(v.String()) || !base64URLRegex.MatchString(v.String()) {
 			return fmt.Errorf("\"isBase64\", %v value must be base64", fieldName)
 		}
 
