@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"reflect"
+	"time"
 )
 
 // Rules struct to run dynamic method name
@@ -124,6 +125,23 @@ func (r Rules) IsBase64(fieldName string, v reflect.Value) error {
 		return nil
 	default:
 		return fmt.Errorf("\"isBase64\", %v value must be string", fieldName)
+	}
+}
+
+// IsDate to check values is date valid format or not
+func (r Rules) IsDate(fieldName string, v reflect.Value) error {
+	switch v.Kind() {
+	case reflect.String:
+		for _, l := range *&layout {
+			_, e := time.Parse(l, v.String())
+			if e == nil {
+				return nil
+			}
+		}
+
+		return fmt.Errorf("\"isDate\", %v value must be Date format", fieldName)
+	default:
+		return fmt.Errorf("\"isDate\", %v value must be string", fieldName)
 	}
 }
 
