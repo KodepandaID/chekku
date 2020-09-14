@@ -289,6 +289,34 @@ func (r Rules) IsLongitude(fieldName string, v reflect.Value) error {
 	}
 }
 
+// IsIn to check value in array strings
+func (r Rules) IsIn(fieldName string, v reflect.Value, in string) error {
+	switch v.Kind() {
+	case reflect.String:
+		if !strings.Contains(in, v.String()) {
+			return fmt.Errorf("\"isIn\", %v value is not allowed", fieldName)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"isIn\", %v value must be a string", fieldName)
+	}
+}
+
+// IsNotIn to check value not in array strings
+func (r Rules) IsNotIn(fieldName string, v reflect.Value, in string) error {
+	switch v.Kind() {
+	case reflect.String:
+		if strings.Contains(in, v.String()) {
+			return fmt.Errorf("\"isNotIn\", %v value is not allowed", fieldName)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"isNotIn\", %v value must be a string", fieldName)
+	}
+}
+
 // LengthBetween to check string values that have char length minimal and maximal
 func (r Rules) LengthBetween(fieldName string, v reflect.Value, m string) error {
 	switch v.Kind() {
