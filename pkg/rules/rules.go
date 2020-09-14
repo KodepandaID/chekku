@@ -5,6 +5,7 @@ import (
 	"net"
 	"reflect"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -285,6 +286,29 @@ func (r Rules) IsLongitude(fieldName string, v reflect.Value) error {
 		return nil
 	default:
 		return fmt.Errorf("\"isLongitude\", %v value must be float or string", fieldName)
+	}
+}
+
+// LengthBetween to check string values that have char length minimal and maximal
+func (r Rules) LengthBetween(fieldName string, v reflect.Value, m string) error {
+	switch v.Kind() {
+	case reflect.String:
+		strLen := len(v.String())
+		in := strings.Split(m, ",")
+		min, _ := strconv.Atoi(in[0])
+		max, _ := strconv.Atoi(in[1])
+
+		if strLen > max {
+			return fmt.Errorf("\"lengthBetween\", %v value length must be less than %v", fieldName, max)
+		}
+
+		if strLen < min {
+			return fmt.Errorf("\"lengthBetween\", %v value length must be more than %v", fieldName, min)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"lengthBetween\", %v value must be string", fieldName)
 	}
 }
 
