@@ -51,7 +51,7 @@ func (r Rules) Required(fieldName string, field reflect.Value) error {
 // IsArray to check value is an array or not
 func (r Rules) IsArray(fieldName string, v reflect.Value) error {
 	switch v.Kind() {
-	case reflect.Slice, reflect.Array:
+	case reflect.Slice, reflect.Array, reflect.Map:
 		return nil
 	default:
 		return fmt.Errorf("\"isArray\", %v must be an array or slice", fieldName)
