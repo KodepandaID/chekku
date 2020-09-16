@@ -369,3 +369,31 @@ func (r Rules) MaxLength(fieldName string, v reflect.Value, m string) error {
 		return fmt.Errorf("\"maxLength\", %v value must be string", fieldName)
 	}
 }
+
+// StartsWith to check if string has a specific prefix
+func (r Rules) StartsWith(fieldName string, v reflect.Value, m string) error {
+	switch v.Kind() {
+	case reflect.String:
+		if !strings.HasPrefix(v.String(), m) {
+			return fmt.Errorf("\"startsWith\", %v value must be start with %v", fieldName, m)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"startsWith\", %v value must be string", fieldName)
+	}
+}
+
+// EndWith to check if the end string has a specific prefix
+func (r Rules) EndWith(fieldName string, v reflect.Value, m string) error {
+	switch v.Kind() {
+	case reflect.String:
+		if !strings.HasSuffix(v.String(), m) {
+			return fmt.Errorf("\"endWith\", %v value must be end with %v", fieldName, m)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"endWith\", %v value must be string", fieldName)
+	}
+}
