@@ -31,12 +31,12 @@ Chekku is Golang validation library
     - [`isNumber`](#isnumber)
     - [`isNumeric`](#isnumeric)
     - [`isUUID`](#isuuid)
-    - [`lengthBetween:min,max`](#lengthbetween:min,max)
-    - [`maxLength:max`](#maxlength:max)
-    - [`minLength:min`](#minlength:min)
+    - [`lengthBetween:min,max`](#lengthbetweenminmax)
+    - [`maxLength:max`](#maxlengthmax)
+    - [`minLength:min`](#minlengthmin)
     - [`notIn`](#notin)
-    - [`startsWith:str`](#startsWith:str)
-    - [`endWith:str`](#endWith:str)
+    - [`startsWith:str`](#startsWithstr)
+    - [`endWith:str`](#endWithstr)
 
 ## Examples
 
