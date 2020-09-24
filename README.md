@@ -34,6 +34,8 @@ Chekku is Golang validation library
     - [`lengthBetween:min,max`](#lengthbetween:min,max)
     - [`maxLength:max`](#maxlength:max)
     - [`minLength:min`](#minlength:min)
+    - [`maxNumber:max`](#maxnumber:max)
+    - [`minNumber:min`](#minnumber:min)
     - [`notIn`](#notin)
     - [`startsWith:str`](#startsWith:str)
     - [`endWith:str`](#endWith:str)
@@ -280,6 +282,73 @@ type Text struct {
 p := Text{
     text1: "hell", // fail
     text2:"hello world" // passes
+}
+
+e := chekku.Validate(p)
+if e != nil {
+    panic(e)
+}
+```
+
+#### `numberBetween:min,max`
+
+Value under this field must be a int or float that has value between `min` and `max`.
+
+Example:
+```go
+type Number struct {
+    number1 int `chekku:"numberBetween:5,10"`
+    number2 int `chekku:"numberBetween:5,10"`
+    number3 float64 `chekku:"numberBetween:5.1,5.3"`
+}
+
+p := Number{
+    number1: 4, // fail
+    number2: 11, // fail
+    number3: 5.2 // passes
+}
+
+e := chekku.Validate(p)
+if e != nil {
+    panic(e)
+}
+```
+
+#### `maxNumber:max`
+
+Value under this field must be a int or float that has value lower or equals `max`.
+
+Example:
+```go
+type Number struct {
+    number1 int `chekku:"maxNumber:5"`
+    number2 float64 `chekku:"maxNumber:5"`
+}
+
+p := Number{
+    number1: 4, // passes
+    number2: 5.1 // fail
+}
+e := chekku.Validate(p)
+if e != nil {
+    panic(e)
+}
+```
+
+#### `minNumber:min`
+
+Value under this field must be a int or float that has value higher or equals `min`.
+
+Example:
+```go
+type Number struct {
+    number1 int `chekku:"minNumber:5"`
+    number2 int `chekku:"minNumber:5"`
+}
+
+p := Number{
+    number1: 4, // fail
+    number2: 6 // passes
 }
 
 e := chekku.Validate(p)

@@ -370,6 +370,87 @@ func (r Rules) MaxLength(fieldName string, v reflect.Value, m string) error {
 	}
 }
 
+// NumberBetween to check number be less than maximal and be more than minimal
+func (r Rules) NumberBetween(fieldName string, v reflect.Value, m string) error {
+	switch v.Kind() {
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		in := strings.Split(m, ",")
+		min, _ := strconv.ParseInt(in[0], 10, 64)
+		max, _ := strconv.ParseInt(in[1], 10, 64)
+
+		if v.Int() > max {
+			return fmt.Errorf("\"numberBetween\", %v value must be less than %v", fieldName, max)
+		}
+
+		if v.Int() < min {
+			fmt.Println("MIN")
+			return fmt.Errorf("\"numberBetween\", %v value must be more than %v", fieldName, min)
+		}
+
+		return nil
+	case reflect.Float32, reflect.Float64:
+		in := strings.Split(m, ",")
+		min, _ := strconv.ParseFloat(in[0], 64)
+		max, _ := strconv.ParseFloat(in[1], 64)
+
+		if v.Float() > max {
+			return fmt.Errorf("\"numberBetween\", %v value must be less than %v", fieldName, max)
+		}
+
+		if v.Float() < min {
+			return fmt.Errorf("\"numberBetween\", %v value must be more than %v", fieldName, min)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"numberBetween\", %v value must be string", fieldName)
+	}
+}
+
+// MinNumber to check number less than a minimal
+func (r Rules) MinNumber(fieldName string, v reflect.Value, m string) error {
+	switch v.Kind() {
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		min, _ := strconv.ParseInt(m, 10, 64)
+		if v.Int() < min {
+			return fmt.Errorf("\"minNumber\", %v value must be more than %v", fieldName, min)
+		}
+
+		return nil
+	case reflect.Float32, reflect.Float64:
+		min, _ := strconv.ParseFloat(m, 64)
+		if v.Float() < min {
+			return fmt.Errorf("\"minNumber\", %v value must be more than %v", fieldName, min)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"minNumber\", %v must be a number", fieldName)
+	}
+}
+
+// MaxNumber to check number less than a minimal
+func (r Rules) MaxNumber(fieldName string, v reflect.Value, m string) error {
+	switch v.Kind() {
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		max, _ := strconv.ParseInt(m, 10, 64)
+		if v.Int() > max {
+			return fmt.Errorf("\"maxNumber\", %v value must be less than %v", fieldName, max)
+		}
+
+		return nil
+	case reflect.Float32, reflect.Float64:
+		max, _ := strconv.ParseFloat(m, 64)
+		if v.Float() > max {
+			return fmt.Errorf("\"maxNumber\", %v value must be less than %v", fieldName, max)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("\"maxNumber\", %v must be a number", fieldName)
+	}
+}
+
 // StartsWith to check if string has a specific prefix
 func (r Rules) StartsWith(fieldName string, v reflect.Value, m string) error {
 	switch v.Kind() {
