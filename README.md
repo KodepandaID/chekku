@@ -38,6 +38,8 @@ Chekku is Golang validation library
     - [`maxNumber:max`](#maxnumber:max)
     - [`minNumber:min`](#minnumber:min)
     - [`notIn`](#notin)
+    - [`requiredIf`](#requiredIf:anotherField,value)
+    - [`requiredUnless`](#requiredUnless:anotherField,value)
     - [`startsWith:str`](#startsWithstr)
     - [`endWith:str`](#endWithstr)
 
@@ -69,6 +71,8 @@ if e != nil {
     panic(e)
 }
 ```
+
+Use ```|``` as separators to use multiple validations at once.
 
 ## Available Rules
 
@@ -353,6 +357,74 @@ p := Number{
 }
 
 e := chekku.Validate(p)
+if e != nil {
+    panic(e)
+}
+```
+
+#### `requiredIf:anotherField,value`
+
+Field within this rule will be required if given ```anotherField``` match ```value```.
+
+Example Passes (text1 is optional because text0 value not match):
+```go
+type Text struct {
+    text0 int
+    text1 string `chekku:"requiredIf:text0,200"`
+}
+
+e := chekku.Validate(Text{
+    text0: 201,
+})
+if e != nil {
+    panic(e)
+}
+```
+
+Example Fail (text1 is required because text0 value is a match):
+```go
+type Text struct {
+    text0 int
+    text1 string `chekku:"requiredIf:text0,200"`
+}
+
+e := chekku.Validate(Text{
+    text0: 200,
+})
+if e != nil {
+    panic(e)
+}
+```
+
+#### `requiredUnless:anotherField,value`
+
+Field within this rule will be required if given ```anotherField``` doesn't match with ```value```.
+
+Example Passes (text1 is optional because text0 value is a match):
+```go
+type Text struct {
+    text0 int
+    text1 string `chekku:"requiredUnless:text0,200"`
+}
+
+e := chekku.Validate(Text{
+    text0: 200,
+})
+if e != nil {
+    panic(e)
+}
+```
+
+Example Fail (text1 is required because text0 value doesn't match):
+```go
+type Text struct {
+    text0 int
+    text1 string `chekku:"requiredUnless:text0,200"`
+}
+
+e := chekku.Validate(Text{
+    text0: 201,
+})
 if e != nil {
     panic(e)
 }
