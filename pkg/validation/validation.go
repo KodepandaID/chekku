@@ -39,29 +39,33 @@ func Validate(inputs interface{}) error {
 	values := reflect.ValueOf(inputs)
 	d := Parse(values)
 
-	r := rules.Rules{}
+	r := rules.Rules{
+		Inputs: values,
+	}
 	for _, v := range d {
 		for _, tag := range v.FieldTag {
-			var result []reflect.Value
-			tagVar := strings.Split(tag, ":")
+			if tag != "" {
+				var result []reflect.Value
+				tagVar := strings.Split(tag, ":")
 
-			if len(tagVar) > 1 {
-				params := make([]reflect.Value, 3)
-				params[0] = reflect.ValueOf(v.FieldName)
-				params[1] = reflect.ValueOf(v.FieldValue)
-				params[2] = reflect.ValueOf(tagVar[1])
+				if len(tagVar) > 1 {
+					params := make([]reflect.Value, 3)
+					params[0] = reflect.ValueOf(v.FieldName)
+					params[1] = reflect.ValueOf(v.FieldValue)
+					params[2] = reflect.ValueOf(tagVar[1])
 
-				result = reflect.ValueOf(r).MethodByName(strings.Title(tagVar[0])).Call(params)
-			} else {
-				params := make([]reflect.Value, 2)
-				params[0] = reflect.ValueOf(v.FieldName)
-				params[1] = reflect.ValueOf(v.FieldValue)
+					result = reflect.ValueOf(r).MethodByName(strings.Title(tagVar[0])).Call(params)
+				} else {
+					params := make([]reflect.Value, 2)
+					params[0] = reflect.ValueOf(v.FieldName)
+					params[1] = reflect.ValueOf(v.FieldValue)
 
-				result = reflect.ValueOf(r).MethodByName(strings.Title(tag)).Call(params)
-			}
+					result = reflect.ValueOf(r).MethodByName(strings.Title(tag)).Call(params)
+				}
 
-			if e := result[0].Interface(); e != nil {
-				return fmt.Errorf("%v", e)
+				if e := result[0].Interface(); e != nil {
+					return fmt.Errorf("%v", e)
+				}
 			}
 		}
 	}

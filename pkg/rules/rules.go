@@ -10,7 +10,9 @@ import (
 )
 
 // Rules struct to run dynamic method name
-type Rules struct{}
+type Rules struct {
+	Inputs reflect.Value
+}
 
 // Required to check value is empty or not becasue is required
 func (r Rules) Required(fieldName string, field reflect.Value) error {
@@ -383,7 +385,6 @@ func (r Rules) NumberBetween(fieldName string, v reflect.Value, m string) error 
 		}
 
 		if v.Int() < min {
-			fmt.Println("MIN")
 			return fmt.Errorf("\"numberBetween\", %v value must be more than %v", fieldName, min)
 		}
 
