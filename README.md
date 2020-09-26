@@ -39,7 +39,7 @@ Chekku is Golang validation library
     - [`minNumber:min`](#minnumbermin)
     - [`notIn`](#notin)
     - [`requiredIf`](#requiredifanotherfieldvalue)
-    - [`requiredUnless`](#requiredunless:anotherfieldvalue)
+    - [`requiredUnless`](#requiredunlessanotherfieldvalue)
     - [`startsWith:str`](#startsWithstr)
     - [`endWith:str`](#endWithstr)
 
