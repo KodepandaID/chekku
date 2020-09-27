@@ -479,3 +479,32 @@ func (r Rules) EndWith(fieldName string, v reflect.Value, m string) error {
 		return fmt.Errorf("\"endWith\", %v value must be string", fieldName)
 	}
 }
+
+// Either as an OR operator to check value with different rules
+func (r Rules) Either(fieldName string, v reflect.Value, m string) error {
+	rules := strings.Split(m, ",")
+	var eCollection []string
+
+	for _, rule := range *&rules {
+		if !strings.Contains(rule, "is") {
+			return fmt.Errorf("%v", "\"either\", only can use is rules")
+		}
+
+		params := make([]reflect.Value, 2)
+		params[0] = reflect.ValueOf(fieldName)
+		params[1] = reflect.ValueOf(v)
+
+		e := reflect.ValueOf(r).MethodByName(strings.Title(rule)).Call(params)
+		if e[0].Interface() != nil {
+			eCollection = append(eCollection, fmt.Sprintf("%v", e[0].Interface()))
+		} else {
+			return nil
+		}
+	}
+
+	if len(eCollection) > 0 {
+		return fmt.Errorf("%v", strings.Join(eCollection, " or "))
+	}
+
+	return nil
+}
