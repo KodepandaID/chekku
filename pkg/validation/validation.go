@@ -5,39 +5,14 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/KodepandaID/chekku/pkg/parser"
 	"github.com/KodepandaID/chekku/pkg/rules"
 )
-
-// Data is a user input validation structure
-type Data struct {
-	FieldName  string
-	FieldType  reflect.Type
-	FieldValue reflect.Value
-	FieldTag   []string
-	IsNull     bool
-}
-
-// Parse to get values, type, tag and field name
-func Parse(values reflect.Value) []Data {
-	d := []Data{}
-
-	t := values.Type()
-	for i := 0; i < values.NumField(); i++ {
-		d = append(d, Data{
-			FieldName:  t.Field(i).Name,
-			FieldType:  t.Field(i).Type,
-			FieldValue: values.Field(i),
-			FieldTag:   strings.Split(t.Field(i).Tag.Get("chekku"), "|"),
-		})
-	}
-
-	return d
-}
 
 // Validate function
 func Validate(inputs interface{}) error {
 	values := reflect.ValueOf(inputs)
-	d := Parse(values)
+	d := parser.Parse(values)
 
 	r := rules.Rules{
 		Inputs: values,
@@ -64,6 +39,20 @@ func Validate(inputs interface{}) error {
 				}
 
 				if e := result[0].Interface(); e != nil {
+					if len(v.ErrorTag) > 0 {
+						t := tag
+						if len(tagVar) > 1 {
+							t = tagVar[0]
+						}
+
+						for _, et := range v.ErrorTag {
+							if strings.Contains(et, t) {
+								e = strings.Split(et, ":")[1]
+							}
+						}
+
+					}
+
 					return fmt.Errorf("%v", e)
 				}
 			}
