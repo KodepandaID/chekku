@@ -11,8 +11,10 @@ Chekku is Golang validation library
 - [Examples](#examples)
     - [Installation](#installation)
     - [Basic Usage](#basic-usage)
+    - [Custom Error](#custom-error)
 - [Available Rules](#available-rules)
     - [`required`](#required)
+    - [`either`](#eitherrule1rule2)
     - [`isAlpha`](#isalpha)
     - [`isAlphanumeric`](#isalphanumeric)
     - [`isArray`](#isarray)
@@ -74,6 +76,27 @@ if e != nil {
 
 Use ```|``` as separators to use multiple validations at once.
 
+#### Custom Error
+
+If you want to set error message by yourself, you can use tag ```errors``` on your struct.
+
+Example:
+
+```go
+type Error struct {
+    Username string `chekku:"required|maxLength:10" errors:"required:username tidak boleh kosong|maxLength:Panjang username tidak boleh lebih dari 10 karakter"`
+}
+
+e := chekku.Validate(Error{
+    Username: "",
+})
+
+if e == nil {
+    panic(e)
+}
+```
+
+
 ## Available Rules
 
 #### `required`
@@ -82,6 +105,34 @@ Value under this field should not be `nil` or an empty string (`""`).
 
 * Invalid values: `nil`, `""`, `0`, `false`, `[]string{}`, `[]int{}`, `[]float{}`
 * Valid values: `"not empty string"`, `0.1`, `[]string{""}`
+
+#### `either:rule1,rule2`
+
+Use this as an ```OR``` operator.
+
+For example you may want to accept ipv4 or ipv6, you can use either rule like below:
+
+Example:
+
+```go
+type IP struct {
+    ip string `chekku:"either:isIPv4,isIPv6"`
+}
+
+validValues := []string{
+    "1.2.3.4",  // Valid
+    "::1", // Valid
+    "not an IP Address" // Invalid
+}
+for _, v := range validValues {
+    e := chekku.Validate(IP{
+        ip: v,
+    })
+    if e != nil {
+        panic(e)
+    }
+}
+```
 
 #### `isAlpha`
 
