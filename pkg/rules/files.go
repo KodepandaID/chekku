@@ -2,11 +2,17 @@ package rules
 
 import (
 	"fmt"
+	"image"
 	"mime/multipart"
 	"net/http"
 	"reflect"
 	"strconv"
 	"strings"
+
+	// image/jpeg, image/png, image/gif to decode image
+	_ "image/gif"
+	_ "image/jpeg"
+	_ "image/png"
 
 	"golang.org/x/text/message"
 )
@@ -56,4 +62,122 @@ func (r Rules) Filesize(fieldName string, v reflect.Value, m string) error {
 	default:
 		return fmt.Errorf("Invalid type only supports *multipart.FileHeader")
 	}
+}
+
+// Dimensions validation image dimension with minimal width and height or
+// maximal width and height. You can also set the ratio to validate.
+func (r Rules) Dimensions(fieldName string, v reflect.Value, m string) error {
+	c := strings.Split(m, ",")
+
+	switch v.Interface().(type) {
+	case *multipart.FileHeader:
+		f, _ := v.Interface().(*multipart.FileHeader).Open()
+		defer f.Close()
+
+		e := dimensionOperation(c, f)
+		if e != nil {
+			return fmt.Errorf("%v", e)
+		}
+
+		return nil
+	default:
+		return fmt.Errorf("Invalid type only supports *multipart.FileHeader")
+	}
+}
+
+func dimensionOperation(c []string, f multipart.File) error {
+	w, h, e := getImageDimension(f)
+	if e != nil {
+		return e
+	}
+
+	for _, v := range c {
+		arg := strings.Split(v, "=")
+		num, _ := strconv.Atoi(arg[1])
+
+		switch {
+		case arg[0] == "min_width":
+			if w < num {
+				return fmt.Errorf("Image width should not be less than %vpx", num)
+			}
+
+			return nil
+		case arg[0] == "max_width":
+			if w > num {
+				return fmt.Errorf("Image width should not be more than %vpx", num)
+			}
+
+			return nil
+		case arg[0] == "min_height":
+			if h < num {
+				return fmt.Errorf("Image height should not be less than %vpx", num)
+			}
+
+			return nil
+		case arg[0] == "max_height":
+			if h > num {
+				return fmt.Errorf("Image height should not be more than %vpx", num)
+			}
+
+			return nil
+		case arg[0] == "ratio":
+			e := aspectRatio(w, h, arg[1])
+			if e != nil {
+				return fmt.Errorf("%v", e)
+			}
+
+			return nil
+		default:
+			return fmt.Errorf("Dimensions cannot process your statements please use min_width, max_width, min_height, max_height or ratio")
+		}
+	}
+
+	return nil
+}
+
+func getImageDimension(f multipart.File) (int, int, error) {
+	img, _, e := image.DecodeConfig(f)
+	if e != nil {
+		return 0, 0, e
+	}
+
+	return img.Width, img.Height, nil
+}
+
+func aspectRatio(w, h int, ratio string) error {
+	var dividend int
+	var divisor int
+
+	if h == w && ratio == "1/1" {
+		return nil
+	}
+
+	if h > w {
+		dividend = h
+		divisor = w
+	} else if w > h {
+		dividend = w
+		divisor = h
+	}
+
+	gcd := -1
+	for gcd == -1 {
+		r := dividend % divisor
+		if r == 0 {
+			gcd = divisor
+		} else {
+			dividend = divisor
+			divisor = r
+		}
+	}
+
+	hr := w / gcd
+	vr := h / gcd
+	nowRatio := fmt.Sprintf("%v/%v", hr, vr)
+
+	if nowRatio != ratio {
+		return fmt.Errorf("Image ratio is %v, the image ratio should be %v", nowRatio, ratio)
+	}
+
+	return nil
 }

@@ -30,6 +30,14 @@ func Validate(inputs interface{}) error {
 					params[2] = reflect.ValueOf(tagVar[1])
 
 					result = reflect.ValueOf(r).MethodByName(strings.Title(tagVar[0])).Call(params)
+				} else if len(tagVar) == 3 {
+					params := make([]reflect.Value, 4)
+					params[0] = reflect.ValueOf(v.FieldName)
+					params[1] = reflect.ValueOf(v.FieldValue)
+					params[2] = reflect.ValueOf(tagVar[1])
+					params[3] = reflect.ValueOf(tagVar[2])
+
+					result = reflect.ValueOf(r).MethodByName(strings.Title(tagVar[0])).Call(params)
 				} else {
 					params := make([]reflect.Value, 2)
 					params[0] = reflect.ValueOf(v.FieldName)
