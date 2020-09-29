@@ -5,7 +5,10 @@ import (
 	"mime/multipart"
 	"net/http"
 	"reflect"
+	"strconv"
 	"strings"
+
+	"golang.org/x/text/message"
 )
 
 // Mimetype validation file. You see the full listing of MIME types at this link
@@ -31,6 +34,24 @@ func (r Rules) Mimetype(fieldName string, v reflect.Value, m string) error {
 		}
 
 		return fmt.Errorf("Invalid mimetype, only supports mimetypes %v", strings.Join(validMime, ", "))
+	default:
+		return fmt.Errorf("Invalid type only supports *multipart.FileHeader")
+	}
+}
+
+// Filesize validation file size. The file size cannot be exceeded the max.
+func (r Rules) Filesize(fieldName string, v reflect.Value, m string) error {
+	max, _ := strconv.ParseInt(m, 10, 64)
+
+	switch v.Interface().(type) {
+	case *multipart.FileHeader:
+		size := v.Interface().(*multipart.FileHeader).Size / 1000
+		if size > max {
+			p := message.NewPrinter(message.MatchLanguage("id"))
+			return fmt.Errorf("The file size cannot be exceeded %vKB", p.Sprintf("%d", max))
+		}
+
+		return nil
 	default:
 		return fmt.Errorf("Invalid type only supports *multipart.FileHeader")
 	}
