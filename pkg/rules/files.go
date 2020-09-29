@@ -20,6 +20,7 @@ func (r Rules) Mimetype(fieldName string, v reflect.Value, m string) error {
 	case *multipart.FileHeader:
 		f, _ := v.Interface().(*multipart.FileHeader).Open()
 		size := v.Interface().(*multipart.FileHeader).Size
+		defer f.Close()
 
 		fileHeader := make([]byte, size)
 		if _, e := f.Read(fileHeader); e != nil {
