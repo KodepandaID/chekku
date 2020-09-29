@@ -44,6 +44,9 @@ Chekku is Golang validation library
     - [`requiredUnless`](#requiredunlessanotherfieldvalue)
     - [`startsWith:str`](#startsWithstr)
     - [`endWith:str`](#endWithstr)
+    - [`mimetype:value`](#mimetypevalue)
+    - [`filesize:value`](#filesizevalue)
+    - [`dimensions:value`](#dimensionsvalue)
 
 ## Examples
 
@@ -524,6 +527,69 @@ p := Text{
 }
 
 e := chekku.Validate(p)
+if e != nil {
+    panic(e)
+}
+```
+
+#### `mimetype:value`
+
+The file under validation must match one of the given MIME types:
+
+Example:
+```go
+type Request struct {
+    File *multipart.FileHeader `chekku:"mimetype:image/png"`
+}
+
+// fh is a variable to pass multipart.FileHeader you can use another name whatever you want.
+e = chekku.Validate(Request{
+    File: fh,
+})
+if e != nil {
+    panic(e)
+}
+```
+
+A full listing of MIME types and their corresponding extensions may be found at the following location: [https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types](https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types)
+
+#### `filesize:value`
+
+The file under validation cannot be exceeded max size in ```Kilobytes```.
+
+Example:
+```go
+type Request struct {
+    File *multipart.FileHeader `chekku:"filesize:512"`
+}
+
+// fh is a variable to pass multipart.FileHeader you can use another name whatever you want.
+e = chekku.Validate(Request{
+    File: fh,
+})
+if e != nil {
+    panic(e)
+}
+```
+
+#### `dimensions:value`
+
+The file under validation must be an image meeting the dimension constraints as specified by the rule's parameters.
+
+Available constraints are: min_width, max_width, min_height, max_height, width, height, ratio.
+
+A ratio constraint should be represented as width divided by height. This can be specified either by a statement like 1/1, 4/3, 16/9 or etc.
+
+Example:
+```go
+type Request struct {
+    File *multipart.FileHeader `chekku:"dimensions:max_width=300,min_width=150,max_height=300,min_height=150,ratio=1/1"`
+}
+
+// fh is a variable to pass multipart.FileHeader you can use another name whatever you want.
+e = chekku.Validate(Request{
+    File: fh,
+})
 if e != nil {
     panic(e)
 }
