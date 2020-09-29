@@ -96,6 +96,12 @@ func dimensionOperation(c []string, f multipart.File) error {
 		num, _ := strconv.Atoi(arg[1])
 
 		switch {
+		case arg[0] == "width":
+			if w != num {
+				return fmt.Errorf("Image width should be %vpx", num)
+			}
+
+			return nil
 		case arg[0] == "min_width":
 			if w < num {
 				return fmt.Errorf("Image width should not be less than %vpx", num)
@@ -105,6 +111,12 @@ func dimensionOperation(c []string, f multipart.File) error {
 		case arg[0] == "max_width":
 			if w > num {
 				return fmt.Errorf("Image width should not be more than %vpx", num)
+			}
+
+			return nil
+		case arg[0] == "height":
+			if h != num {
+				return fmt.Errorf("Image height should be %vpx", num)
 			}
 
 			return nil
