@@ -11,6 +11,7 @@ Chekku is Golang validation library
 - [Examples](#examples)
     - [Installation](#installation)
     - [Basic Usage](#basic-usage)
+    - [Return Error](#return-error)
     - [Custom Error](#custom-error)
 - [Available Rules](#available-rules)
     - [`required`](#required)
@@ -78,6 +79,16 @@ if e != nil {
 ```
 
 Use ```|``` as separators to use multiple validations at once.
+
+#### Return Error
+
+in version 1 the return error is converted to an array struct as below:
+```go
+type Error struct {
+    Code string
+    Detail string
+}
+```
 
 #### Custom Error
 
