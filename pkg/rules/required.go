@@ -43,6 +43,10 @@ func (r Rules) RequiredIf(fieldName string, v reflect.Value, m string) error {
 
 		return nil
 	default:
+		if z.IsNil() {
+			return fmt.Errorf("\"required\", %v is required", fieldName)
+		}
+
 		return nil
 	}
 }
@@ -83,6 +87,10 @@ func (r Rules) RequiredUnless(fieldName string, v reflect.Value, m string) error
 
 		return nil
 	default:
+		if z.IsNil() {
+			return fmt.Errorf("\"required\", %v is required", fieldName)
+		}
+
 		return nil
 	}
 }
