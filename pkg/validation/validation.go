@@ -72,7 +72,7 @@ func Validate(inputs interface{}) []Errors {
 
 					}
 
-					if required {
+					if required || !required && !v.IsNull {
 						eStack = append(eStack, Errors{
 							Code:   v.FieldName + ":" + t,
 							Detail: fmt.Sprintf("%v", e),
