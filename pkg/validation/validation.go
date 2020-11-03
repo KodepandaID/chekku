@@ -77,9 +77,7 @@ func Validate(inputs interface{}) []Errors {
 				}
 			}
 		}
-
-		return eStack
 	}
 
-	return nil
+	return eStack
 }
