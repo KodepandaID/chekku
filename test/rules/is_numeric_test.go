@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestIsNumericInvalidWithText(t *testing.T) {
@@ -17,11 +16,6 @@ func TestIsNumericInvalidWithText(t *testing.T) {
 	})
 
 	if e == nil {
-		t.Error("isNumeric shoud be invalid")
-		return
-	}
-
-	if !assert.Equal(t, e.Error(), `"isNumeric", numeric must be a numeric`) {
 		t.Error("isNumeric shoud be invalid")
 		return
 	}

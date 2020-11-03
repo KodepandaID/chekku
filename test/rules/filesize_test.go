@@ -49,11 +49,11 @@ func TestInvalidFilesize(t *testing.T) {
 		File *multipart.FileHeader `chekku:"filesize:100"`
 	}
 
-	e = chekku.Validate(Request{
+	eStack := chekku.Validate(Request{
 		File: fh,
 	})
 
-	if e == nil {
+	if eStack == nil {
 		t.Error("filesize should be invalid")
 		return
 	}
@@ -72,11 +72,11 @@ func TestValidFilesize(t *testing.T) {
 		File *multipart.FileHeader `chekku:"filesize:512"`
 	}
 
-	e = chekku.Validate(Request{
+	eStack := chekku.Validate(Request{
 		File: fh,
 	})
 
-	if e != nil {
+	if eStack != nil {
 		t.Error("filesize should be valid")
 		return
 	}

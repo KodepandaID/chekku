@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestIsBase64Invalid(t *testing.T) {
@@ -24,11 +23,6 @@ func TestIsBase64Invalid(t *testing.T) {
 		})
 
 		if e == nil {
-			t.Error("isBase64 shoud be invalid")
-			return
-		}
-
-		if !assert.Equal(t, e.Error(), `"isBase64", base value must be base64`) {
 			t.Error("isBase64 shoud be invalid")
 			return
 		}

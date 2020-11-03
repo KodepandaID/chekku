@@ -9,14 +9,23 @@ import (
 	"github.com/KodepandaID/chekku/pkg/rules"
 )
 
+// Errors stack return
+type Errors struct {
+	Code   string
+	Detail string
+}
+
 // Validate function
-func Validate(inputs interface{}) error {
+func Validate(inputs interface{}) []Errors {
 	values := reflect.ValueOf(inputs)
 	d := parser.Parse(values)
 
 	r := rules.Rules{
 		Inputs: values,
 	}
+
+	var eStack []Errors
+
 	for _, v := range d {
 		for _, tag := range v.FieldTag {
 			if tag != "" {
@@ -47,8 +56,8 @@ func Validate(inputs interface{}) error {
 				}
 
 				if e := result[0].Interface(); e != nil {
+					t := tag
 					if len(v.ErrorTag) > 0 {
-						t := tag
 						if len(tagVar) > 1 {
 							t = tagVar[0]
 						}
@@ -61,10 +70,15 @@ func Validate(inputs interface{}) error {
 
 					}
 
-					return fmt.Errorf("%v", e)
+					eStack = append(eStack, Errors{
+						Code:   t,
+						Detail: fmt.Sprintf("%v", e),
+					})
 				}
 			}
 		}
+
+		return eStack
 	}
 
 	return nil

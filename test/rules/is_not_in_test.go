@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestIsNotInInvalid(t *testing.T) {
@@ -18,11 +17,6 @@ func TestIsNotInInvalid(t *testing.T) {
 
 	if e == nil {
 		t.Error("isNotIn shoud be invalid")
-		return
-	}
-
-	if !assert.Equal(t, e.Error(), `"isNotIn", in value is not allowed`) {
-		t.Error("isIn shoud be invalid")
 		return
 	}
 }

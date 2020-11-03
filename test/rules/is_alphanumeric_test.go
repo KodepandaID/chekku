@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestIsAlphanumericInvalid(t *testing.T) {
@@ -29,11 +28,6 @@ func TestIsAlphanumericInvalid(t *testing.T) {
 			t.Error("isAlphanumeric shoud be invalid")
 			return
 		}
-
-		if !assert.Equal(t, e.Error(), `"isAlphanumeric", alphanumeric value must be the combination words and numbers`) {
-			t.Error("isAlphanumeric shoud be invalid")
-			return
-		}
 	}
 }
 
@@ -47,11 +41,6 @@ func TestIsAlphanumericInvalidWithInteger(t *testing.T) {
 	})
 
 	if e == nil {
-		t.Error("isAlphanumeric shoud be invalid")
-		return
-	}
-
-	if !assert.Equal(t, e.Error(), `"isAlphanumeric", alphanumeric value must be string`) {
 		t.Error("isAlphanumeric shoud be invalid")
 		return
 	}

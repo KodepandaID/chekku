@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestIsBoolInvalidWithText(t *testing.T) {
@@ -20,11 +19,6 @@ func TestIsBoolInvalidWithText(t *testing.T) {
 		t.Error("isBool shoud be invalid")
 		return
 	}
-
-	if !assert.Equal(t, e.Error(), `"isBool", boolean must be a boolean`) {
-		t.Error("isBool shoud be invalid")
-		return
-	}
 }
 
 func TestIsBoolInvalidWithInteger(t *testing.T) {
@@ -37,11 +31,6 @@ func TestIsBoolInvalidWithInteger(t *testing.T) {
 	})
 
 	if e == nil {
-		t.Error("isBool shoud be invalid")
-		return
-	}
-
-	if !assert.Equal(t, e.Error(), `"isBool", boolean must be a boolean`) {
 		t.Error("isBool shoud be invalid")
 		return
 	}

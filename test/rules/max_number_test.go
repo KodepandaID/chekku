@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestInvalidIntMaxNumber(t *testing.T) {
@@ -20,11 +19,6 @@ func TestInvalidIntMaxNumber(t *testing.T) {
 		t.Error("maxNumber shoud be invalid")
 		return
 	}
-
-	if !assert.Equal(t, e.Error(), `"maxNumber", number value must be less than 5`) {
-		t.Error("maxNumber shoud be invalid")
-		return
-	}
 }
 
 func TestInvalidFloatMaxNumber(t *testing.T) {
@@ -37,11 +31,6 @@ func TestInvalidFloatMaxNumber(t *testing.T) {
 	})
 
 	if e == nil {
-		t.Error("maxNumber shoud be invalid")
-		return
-	}
-
-	if !assert.Equal(t, e.Error(), `"maxNumber", number value must be less than 5`) {
 		t.Error("maxNumber shoud be invalid")
 		return
 	}

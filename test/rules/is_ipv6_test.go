@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestIsIPv6InvalidText(t *testing.T) {
@@ -20,11 +19,6 @@ func TestIsIPv6InvalidText(t *testing.T) {
 		t.Error("isIPv6 shoud be invalid")
 		return
 	}
-
-	if !assert.Equal(t, e.Error(), `"isIPv6", ip value must be ip address version 6`) {
-		t.Error("isIPv6 shoud be invalid")
-		return
-	}
 }
 
 func TestIsIPv6InvalidWithInteger(t *testing.T) {
@@ -37,11 +31,6 @@ func TestIsIPv6InvalidWithInteger(t *testing.T) {
 	})
 
 	if e == nil {
-		t.Error("isIPv6 shoud be invalid")
-		return
-	}
-
-	if !assert.Equal(t, e.Error(), `"isIPv6", ip value must be string`) {
 		t.Error("isIPv6 shoud be invalid")
 		return
 	}
@@ -65,11 +54,6 @@ func TestIsIPv6InvalidIP(t *testing.T) {
 		})
 
 		if e == nil {
-			t.Error("isIPv6 shoud be invalid")
-			return
-		}
-
-		if !assert.Equal(t, e.Error(), `"isIPv6", ip value must be ip address version 6`) {
 			t.Error("isIPv6 shoud be invalid")
 			return
 		}

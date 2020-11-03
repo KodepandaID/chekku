@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestIsISBNInvalid(t *testing.T) {
@@ -26,11 +25,6 @@ func TestIsISBNInvalid(t *testing.T) {
 		})
 
 		if e == nil {
-			t.Error("isISBN shoud be invalid")
-			return
-		}
-
-		if !assert.Equal(t, e.Error(), `"isISBN", isbn value must be ISBN`) {
 			t.Error("isISBN shoud be invalid")
 			return
 		}

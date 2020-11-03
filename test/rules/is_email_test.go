@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestIsEmailInvalid(t *testing.T) {
@@ -24,11 +23,6 @@ func TestIsEmailInvalid(t *testing.T) {
 		})
 
 		if e == nil {
-			t.Error("isEmail shoud be invalid")
-			return
-		}
-
-		if !assert.Equal(t, e.Error(), `"isEmail", email value must be an email address`) {
 			t.Error("isEmail shoud be invalid")
 			return
 		}

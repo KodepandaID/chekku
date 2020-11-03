@@ -49,11 +49,11 @@ func TestInvalidRatio(t *testing.T) {
 		File *multipart.FileHeader `chekku:"dimensions:ratio=16/9"`
 	}
 
-	e = chekku.Validate(Request{
+	eStack := chekku.Validate(Request{
 		File: fh,
 	})
 
-	if e == nil {
+	if eStack == nil {
 		t.Errorf("dimensions ratio should be invalid")
 		return
 	}
@@ -72,11 +72,11 @@ func TestValidRatio(t *testing.T) {
 		File *multipart.FileHeader `chekku:"dimensions:ratio=1/1"`
 	}
 
-	e = chekku.Validate(Request{
+	eStack := chekku.Validate(Request{
 		File: fh,
 	})
 
-	if e != nil {
+	if eStack != nil {
 		t.Errorf("dimenstions ratio should be valid")
 		return
 	}
@@ -95,11 +95,11 @@ func TestValidMinWidth(t *testing.T) {
 		File *multipart.FileHeader `chekku:"dimensions:min_width=150"`
 	}
 
-	e = chekku.Validate(Request{
+	eStack := chekku.Validate(Request{
 		File: fh,
 	})
 
-	if e != nil {
+	if eStack != nil {
 		t.Errorf("dimensions min_width should be valid")
 		return
 	}
@@ -118,11 +118,11 @@ func TestInvalidMaxWidth(t *testing.T) {
 		File *multipart.FileHeader `chekku:"dimensions:max_width=150"`
 	}
 
-	e = chekku.Validate(Request{
+	eStack := chekku.Validate(Request{
 		File: fh,
 	})
 
-	if e == nil {
+	if eStack == nil {
 		t.Errorf("dimensions max_width should be invalid")
 		return
 	}
@@ -141,11 +141,11 @@ func TestValidMaxWidth(t *testing.T) {
 		File *multipart.FileHeader `chekku:"dimensions:max_width=300"`
 	}
 
-	e = chekku.Validate(Request{
+	eStack := chekku.Validate(Request{
 		File: fh,
 	})
 
-	if e != nil {
+	if eStack != nil {
 		t.Errorf("dimensions max_width should be valid")
 		return
 	}
@@ -164,11 +164,11 @@ func TestInvalidMinWidth(t *testing.T) {
 		File *multipart.FileHeader `chekku:"dimensions:min_width=300"`
 	}
 
-	e = chekku.Validate(Request{
+	eStack := chekku.Validate(Request{
 		File: fh,
 	})
 
-	if e == nil {
+	if eStack == nil {
 		t.Errorf("dimensions min_width should be invalid")
 		return
 	}
@@ -187,11 +187,11 @@ func TestInvalidMinHeight(t *testing.T) {
 		File *multipart.FileHeader `chekku:"dimensions:min_height=300"`
 	}
 
-	e = chekku.Validate(Request{
+	eStack := chekku.Validate(Request{
 		File: fh,
 	})
 
-	if e == nil {
+	if eStack == nil {
 		t.Errorf("dimensions min_height should be invalid")
 		return
 	}
@@ -210,11 +210,11 @@ func TestValidMinHeight(t *testing.T) {
 		File *multipart.FileHeader `chekku:"dimensions:min_height=150"`
 	}
 
-	e = chekku.Validate(Request{
+	eStack := chekku.Validate(Request{
 		File: fh,
 	})
 
-	if e != nil {
+	if eStack != nil {
 		t.Errorf("dimensions min_height should be valid")
 		return
 	}
@@ -233,11 +233,11 @@ func TestInvalidMaxHeight(t *testing.T) {
 		File *multipart.FileHeader `chekku:"dimensions:max_height=150"`
 	}
 
-	e = chekku.Validate(Request{
+	eStack := chekku.Validate(Request{
 		File: fh,
 	})
 
-	if e == nil {
+	if eStack == nil {
 		t.Errorf("dimensions max_height should be invalid")
 		return
 	}
@@ -256,11 +256,11 @@ func TestValidMaxHeight(t *testing.T) {
 		File *multipart.FileHeader `chekku:"dimensions:max_height=300"`
 	}
 
-	e = chekku.Validate(Request{
+	eStack := chekku.Validate(Request{
 		File: fh,
 	})
 
-	if e != nil {
+	if eStack != nil {
 		t.Errorf("dimensions min_height should be valid")
 		return
 	}
@@ -279,11 +279,11 @@ func TestValidMultipleWidthHeight(t *testing.T) {
 		File *multipart.FileHeader `chekku:"dimensions:max_width=300,min_width=150,max_height=300,min_height=150,ratio=1/1"`
 	}
 
-	e = chekku.Validate(Request{
+	eStack := chekku.Validate(Request{
 		File: fh,
 	})
 
-	if e != nil {
+	if eStack != nil {
 		t.Errorf("dimensions max_width, min_width, max_height, min_height and ratio should be valid")
 		return
 	}

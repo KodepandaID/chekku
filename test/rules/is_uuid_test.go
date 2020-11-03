@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestIsUUIDInvalid(t *testing.T) {
@@ -24,11 +23,6 @@ func TestIsUUIDInvalid(t *testing.T) {
 		})
 
 		if e == nil {
-			t.Error("isUUID shoud be invalid")
-			return
-		}
-
-		if !assert.Equal(t, e.Error(), `"isUUID", uuid must be an UUID`) {
 			t.Error("isUUID shoud be invalid")
 			return
 		}

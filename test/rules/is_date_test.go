@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestIsDateInvalid(t *testing.T) {
@@ -24,11 +23,6 @@ func TestIsDateInvalid(t *testing.T) {
 		})
 
 		if e == nil {
-			t.Error("isDate shoud be invalid")
-			return
-		}
-
-		if !assert.Equal(t, e.Error(), `"isDate", date value must be Date format`) {
 			t.Error("isDate shoud be invalid")
 			return
 		}

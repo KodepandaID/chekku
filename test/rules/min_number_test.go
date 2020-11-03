@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestInvalidIntMinNumber(t *testing.T) {
@@ -20,11 +19,6 @@ func TestInvalidIntMinNumber(t *testing.T) {
 		t.Error("minNumber shoud be invalid")
 		return
 	}
-
-	if !assert.Equal(t, e.Error(), `"minNumber", number value must be more than 5`) {
-		t.Error("minNumber shoud be invalid")
-		return
-	}
 }
 
 func TestInvalidFloatMinNumber(t *testing.T) {
@@ -37,11 +31,6 @@ func TestInvalidFloatMinNumber(t *testing.T) {
 	})
 
 	if e == nil {
-		t.Error("minNumber shoud be invalid")
-		return
-	}
-
-	if !assert.Equal(t, e.Error(), `"minNumber", number value must be more than 5`) {
 		t.Error("minNumber shoud be invalid")
 		return
 	}

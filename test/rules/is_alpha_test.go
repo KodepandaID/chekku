@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestIsAlphaInvalid(t *testing.T) {
@@ -24,11 +23,6 @@ func TestIsAlphaInvalid(t *testing.T) {
 		})
 
 		if e == nil {
-			t.Error("isAlpha shoud be invalid")
-			return
-		}
-
-		if !assert.Equal(t, e.Error(), `"isAlpha", alpha value must be the Aa - Zz`) {
 			t.Error("isAlpha shoud be invalid")
 			return
 		}

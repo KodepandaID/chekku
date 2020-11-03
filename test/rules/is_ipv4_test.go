@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestIsIPv4InvalidText(t *testing.T) {
@@ -17,11 +16,6 @@ func TestIsIPv4InvalidText(t *testing.T) {
 	})
 
 	if e == nil {
-		t.Error("isIPv4 shoud be invalid")
-		return
-	}
-
-	if !assert.Equal(t, e.Error(), `"isIPv4", ip value must be ip address version 4`) {
 		t.Error("isIPv4 shoud be invalid")
 		return
 	}
@@ -40,11 +34,6 @@ func TestIsIPv4InvalidWithInteger(t *testing.T) {
 		t.Error("isIPv4 shoud be invalid")
 		return
 	}
-
-	if !assert.Equal(t, e.Error(), `"isIPv4", ip value must be string`) {
-		t.Error("isIPv4 shoud be invalid")
-		return
-	}
 }
 
 func TestIsIPv4InvalidIP(t *testing.T) {
@@ -57,11 +46,6 @@ func TestIsIPv4InvalidIP(t *testing.T) {
 	})
 
 	if e == nil {
-		t.Error("isIPv4 shoud be invalid")
-		return
-	}
-
-	if !assert.Equal(t, e.Error(), `"isIPv4", ip value must be ip address version 4`) {
 		t.Error("isIPv4 shoud be invalid")
 		return
 	}
@@ -80,11 +64,6 @@ func TestIsIPv4InvalidIPRules(t *testing.T) {
 		t.Error("isIPv4 shoud be invalid")
 		return
 	}
-
-	if !assert.Equal(t, e.Error(), `"isIPv4", ip value must be ip address version 4`) {
-		t.Error("isIPv4 shoud be invalid")
-		return
-	}
 }
 
 func TestIsIPv4InvalidWithIPv6(t *testing.T) {
@@ -97,11 +76,6 @@ func TestIsIPv4InvalidWithIPv6(t *testing.T) {
 	})
 
 	if e == nil {
-		t.Error("isIPv4 shoud be invalid")
-		return
-	}
-
-	if !assert.Equal(t, e.Error(), `"isIPv4", ip value must be ip address version 4`) {
 		t.Error("isIPv4 shoud be invalid")
 		return
 	}

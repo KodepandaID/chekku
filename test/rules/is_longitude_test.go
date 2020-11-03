@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestIsLongitudeInvalidWithString(t *testing.T) {
@@ -23,11 +22,6 @@ func TestIsLongitudeInvalidWithString(t *testing.T) {
 		})
 
 		if e == nil {
-			t.Error("isLongitude shoud be invalid")
-			return
-		}
-
-		if !assert.Equal(t, e.Error(), `"isLongitude", long value must be the geolocation Longitude`) {
 			t.Error("isLongitude shoud be invalid")
 			return
 		}
@@ -50,11 +44,6 @@ func TestIsLongitudeInvalidWithFloat(t *testing.T) {
 		})
 
 		if e == nil {
-			t.Error("isLongitude shoud be invalid")
-			return
-		}
-
-		if !assert.Equal(t, e.Error(), `"isLongitude", long value must be the geolocation Longitude`) {
 			t.Error("isLongitude shoud be invalid")
 			return
 		}

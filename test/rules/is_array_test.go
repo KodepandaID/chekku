@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestIsArrayInvalidWithText(t *testing.T) {
@@ -20,11 +19,6 @@ func TestIsArrayInvalidWithText(t *testing.T) {
 		t.Error("isArray shoud be invalid")
 		return
 	}
-
-	if !assert.Equal(t, e.Error(), `"isArray", array must be an array or slice`) {
-		t.Error("isArray shoud be invalid")
-		return
-	}
 }
 
 func TestIsArrayInvalidWithInteger(t *testing.T) {
@@ -37,11 +31,6 @@ func TestIsArrayInvalidWithInteger(t *testing.T) {
 	})
 
 	if e == nil {
-		t.Error("isArray shoud be invalid")
-		return
-	}
-
-	if !assert.Equal(t, e.Error(), `"isArray", array must be an array or slice`) {
 		t.Error("isArray shoud be invalid")
 		return
 	}

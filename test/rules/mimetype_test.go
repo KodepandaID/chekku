@@ -49,11 +49,11 @@ func TestInvalidMimetype(t *testing.T) {
 		File *multipart.FileHeader `chekku:"mimetype:image/jpeg"`
 	}
 
-	e = chekku.Validate(Request{
+	eStack := chekku.Validate(Request{
 		File: fh,
 	})
 
-	if e == nil {
+	if eStack == nil {
 		t.Error("mimetype should be invalid")
 		return
 	}
@@ -72,11 +72,11 @@ func TestInvalidMimetypeNotUsedMultipartFileHeader(t *testing.T) {
 		File *multipart.File `chekku:"mimetype:image/jpeg"`
 	}
 
-	e = chekku.Validate(Request{
+	eStack := chekku.Validate(Request{
 		File: &f,
 	})
 
-	if e == nil {
+	if eStack == nil {
 		t.Error("mimetype should be invalid")
 		return
 	}
@@ -95,11 +95,11 @@ func TestValidMimetype(t *testing.T) {
 		File *multipart.FileHeader `chekku:"mimetype:image/png"`
 	}
 
-	e = chekku.Validate(Request{
+	eStack := chekku.Validate(Request{
 		File: fh,
 	})
 
-	if e != nil {
+	if eStack != nil {
 		t.Error("mimetype should be valid")
 		return
 	}

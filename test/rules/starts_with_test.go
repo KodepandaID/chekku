@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestStartsWithInvalid(t *testing.T) {
@@ -24,11 +23,6 @@ func TestStartsWithInvalid(t *testing.T) {
 		})
 
 		if e == nil {
-			t.Error("startsWith shoud be invalid")
-			return
-		}
-
-		if !assert.Equal(t, e.Error(), `"startsWith", str value must be start with foo`) {
 			t.Error("startsWith shoud be invalid")
 			return
 		}

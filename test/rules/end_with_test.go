@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/KodepandaID/chekku"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestEndWithInvalid(t *testing.T) {
@@ -23,11 +22,6 @@ func TestEndWithInvalid(t *testing.T) {
 		})
 
 		if e == nil {
-			t.Error("endWith shoud be invalid")
-			return
-		}
-
-		if !assert.Equal(t, e.Error(), `"endWith", str value must be end with foo`) {
 			t.Error("endWith shoud be invalid")
 			return
 		}
