@@ -72,11 +72,25 @@ func Validate(inputs interface{}) []Errors {
 
 					}
 
-					if required || !required && !v.FieldValue.IsNil() {
+					if required {
 						eStack = append(eStack, Errors{
 							Code:   v.FieldName + ":" + t,
 							Detail: fmt.Sprintf("%v", e),
 						})
+					}
+
+					if !required {
+						params := make([]reflect.Value, 2)
+						params[0] = reflect.ValueOf(v.FieldName)
+						params[1] = reflect.ValueOf(v.FieldValue)
+
+						result = reflect.ValueOf(r).MethodByName(strings.Title("required")).Call(params)
+						if e := result[0].Interface(); e == nil {
+							eStack = append(eStack, Errors{
+								Code:   v.FieldName + ":" + t,
+								Detail: fmt.Sprintf("%v", e),
+							})
+						}
 					}
 				}
 			}
@@ -89,7 +103,7 @@ func Validate(inputs interface{}) []Errors {
 // Find an element on slice
 func Find(slice []string, val string) bool {
 	for _, item := range slice {
-		if item == val {
+		if strings.Contains(item, val) {
 			return true
 		}
 	}

@@ -12,7 +12,7 @@ func TestEndWithInvalid(t *testing.T) {
 	}
 
 	invalidValues := []string{
-		"",
+		"akhbar",
 		"foobar",
 	}
 

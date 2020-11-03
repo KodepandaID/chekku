@@ -1,7 +1,6 @@
 package test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/KodepandaID/chekku"
@@ -128,7 +127,6 @@ func TestValidStringRequiredUnless(t *testing.T) {
 	e := chekku.Validate(Text{
 		text0: "hello",
 	})
-	fmt.Print(e)
 
 	if e != nil {
 		t.Error("required should be valid")
