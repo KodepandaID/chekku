@@ -21,6 +21,9 @@ import (
 // https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
 func (r Rules) Mimetype(fieldName string, v reflect.Value, m string) error {
 	validMime := strings.Split(m, ",")
+	if v.IsNil() {
+		return fmt.Errorf("Invalid file not found")
+	}
 
 	switch v.Interface().(type) {
 	case *multipart.FileHeader:
@@ -49,6 +52,9 @@ func (r Rules) Mimetype(fieldName string, v reflect.Value, m string) error {
 // Filesize validation file size. The file size cannot be exceeded the max.
 func (r Rules) Filesize(fieldName string, v reflect.Value, m string) error {
 	max, _ := strconv.ParseInt(m, 10, 64)
+	if v.IsNil() {
+		return fmt.Errorf("Invalid file not found")
+	}
 
 	switch v.Interface().(type) {
 	case *multipart.FileHeader:
@@ -68,6 +74,9 @@ func (r Rules) Filesize(fieldName string, v reflect.Value, m string) error {
 // maximal width and height. You can also set the ratio to validate.
 func (r Rules) Dimensions(fieldName string, v reflect.Value, m string) error {
 	c := strings.Split(m, ",")
+	if v.IsNil() {
+		return fmt.Errorf("Invalid file not found")
+	}
 
 	switch v.Interface().(type) {
 	case *multipart.FileHeader:

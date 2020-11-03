@@ -25,8 +25,10 @@ func Validate(inputs interface{}) []Errors {
 	}
 
 	var eStack []Errors
+	var required bool
 
 	for _, v := range d {
+		required = Find(v.FieldTag, "required")
 		for _, tag := range v.FieldTag {
 			if tag != "" {
 				var result []reflect.Value
@@ -70,14 +72,26 @@ func Validate(inputs interface{}) []Errors {
 
 					}
 
-					eStack = append(eStack, Errors{
-						Code:   v.FieldName + ":" + t,
-						Detail: fmt.Sprintf("%v", e),
-					})
+					if required {
+						eStack = append(eStack, Errors{
+							Code:   v.FieldName + ":" + t,
+							Detail: fmt.Sprintf("%v", e),
+						})
+					}
 				}
 			}
 		}
 	}
 
 	return eStack
+}
+
+// Find an element on slice
+func Find(slice []string, val string) bool {
+	for _, item := range slice {
+		if item == val {
+			return true
+		}
+	}
+	return false
 }
