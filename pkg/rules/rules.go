@@ -45,6 +45,10 @@ func (r Rules) Required(fieldName string, field reflect.Value) error {
 		if field.IsNil() {
 			return fmt.Errorf("\"required\", %v is required. Struct can not be nil", fieldName)
 		}
+	default:
+		if field.IsNil() {
+			return fmt.Errorf("\"required\", %v is required", fieldName)
+		}
 	}
 
 	return nil
