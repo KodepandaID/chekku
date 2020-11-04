@@ -96,6 +96,10 @@ func (r Rules) IsFloat(fieldName string, v reflect.Value) error {
 
 // IsUUID to check values is uuid, uuid3, uuid4 or uuid5
 func (r Rules) IsUUID(fieldName string, v reflect.Value) error {
+	if v.Type().Name() == "UUID" {
+		return nil
+	}
+
 	switch v.Kind() {
 	case reflect.String:
 		if !uUIDRegex.MatchString(v.String()) && !uUID3Regex.MatchString(v.String()) && !uUID4Regex.MatchString(v.String()) && !uUID5Regex.MatchString(v.String()) {
