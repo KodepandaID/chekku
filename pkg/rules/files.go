@@ -44,6 +44,26 @@ func (r Rules) Mimetype(fieldName string, v reflect.Value, m string) error {
 		}
 
 		return fmt.Errorf("Invalid mimetype, only supports mimetypes %v", strings.Join(validMime, ", "))
+	case []*multipart.FileHeader:
+		for _, fh := range v.Interface().([]*multipart.FileHeader) {
+			f, _ := fh.Open()
+			size := fh.Size
+			defer f.Close()
+
+			fileHeader := make([]byte, size)
+			if _, e := f.Read(fileHeader); e != nil {
+				return fmt.Errorf("%v", e)
+			}
+
+			mime := http.DetectContentType(fileHeader)
+			for _, v := range validMime {
+				if mime == v {
+					return nil
+				}
+			}
+		}
+
+		return fmt.Errorf("Invalid mimetype, only supports mimetypes %v", strings.Join(validMime, ", "))
 	default:
 		return fmt.Errorf("Invalid type only supports *multipart.FileHeader")
 	}
@@ -62,6 +82,16 @@ func (r Rules) Filesize(fieldName string, v reflect.Value, m string) error {
 		if size > max {
 			p := message.NewPrinter(message.MatchLanguage("id"))
 			return fmt.Errorf("The file size cannot be exceeded %vKB", p.Sprintf("%d", max))
+		}
+
+		return nil
+	case []*multipart.FileHeader:
+		for _, fh := range v.Interface().([]*multipart.FileHeader) {
+			size := fh.Size / 1000
+			if size > max {
+				p := message.NewPrinter(message.MatchLanguage("id"))
+				return fmt.Errorf("The file size cannot be exceeded %vKB", p.Sprintf("%d", max))
+			}
 		}
 
 		return nil
@@ -88,6 +118,17 @@ func (r Rules) Dimensions(fieldName string, v reflect.Value, m string) error {
 			return fmt.Errorf("%v", e)
 		}
 
+		return nil
+	case []*multipart.FileHeader:
+		for _, fh := range v.Interface().([]*multipart.FileHeader) {
+			f, _ := fh.Open()
+			defer f.Close()
+
+			e := dimensionOperation(c, f)
+			if e != nil {
+				return fmt.Errorf("%v", e)
+			}
+		}
 		return nil
 	default:
 		return fmt.Errorf("Invalid type only supports *multipart.FileHeader")
