@@ -42,7 +42,7 @@ func (r Rules) Required(fieldName string, field reflect.Value) error {
 			return fmt.Errorf("\"required\", %v is required. Interface{} can not be nil", fieldName)
 		}
 	case reflect.Struct:
-		if field.IsNil() {
+		if field.IsZero() {
 			return fmt.Errorf("\"required\", %v is required. Struct can not be nil", fieldName)
 		}
 	default:
