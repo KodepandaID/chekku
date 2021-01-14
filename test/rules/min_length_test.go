@@ -50,3 +50,18 @@ func TestMinLengthValid(t *testing.T) {
 		return
 	}
 }
+
+func TestMinLengthValidNoData(t *testing.T) {
+	type Text struct {
+		text string `chekku:"minLength:5"`
+	}
+
+	e := chekku.Validate(Text{
+		text: "",
+	})
+
+	if e != nil {
+		t.Error("minLength shoud be valid")
+		return
+	}
+}

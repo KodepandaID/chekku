@@ -104,3 +104,18 @@ func TestValidMimetype(t *testing.T) {
 		return
 	}
 }
+
+func TestValidMimetypeNoData(t *testing.T) {
+	type Request struct {
+		File *multipart.FileHeader `chekku:"mimetype:image/png"`
+	}
+
+	eStack := chekku.Validate(Request{
+		File: &multipart.FileHeader{},
+	})
+
+	if eStack != nil {
+		t.Error("mimetype should be valid")
+		return
+	}
+}

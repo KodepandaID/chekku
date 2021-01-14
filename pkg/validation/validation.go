@@ -30,8 +30,9 @@ func Validate(inputs interface{}) []Errors {
 	for _, v := range d {
 		required = Find(v.FieldTag, "required")
 		for _, tag := range v.FieldTag {
-			if tag != "" {
-				var result []reflect.Value
+			var result []reflect.Value
+
+			if tag != "" && result != nil {
 				tagVar := strings.Split(tag, ":")
 
 				if len(tagVar) > 1 {

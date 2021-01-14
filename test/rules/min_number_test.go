@@ -65,3 +65,18 @@ func TestValidFloatMinNumber(t *testing.T) {
 		return
 	}
 }
+
+func TestValidMinNumberNoData(t *testing.T) {
+	type Number struct {
+		number float64 `chekku:"minNumber:5.2"`
+	}
+
+	e := chekku.Validate(Number{
+		number: 0,
+	})
+
+	if e != nil {
+		t.Error("minNumber shoud be valid")
+		return
+	}
+}
