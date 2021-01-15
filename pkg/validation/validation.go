@@ -32,7 +32,7 @@ func Validate(inputs interface{}) []Errors {
 		for _, tag := range v.FieldTag {
 			var result []reflect.Value
 
-			if tag != "" && result != nil {
+			if tag != "" {
 				tagVar := strings.Split(tag, ":")
 
 				if len(tagVar) > 1 {
@@ -78,20 +78,8 @@ func Validate(inputs interface{}) []Errors {
 							Code:   v.FieldName + ":" + t,
 							Detail: fmt.Sprintf("%v", e),
 						})
-					}
-
-					if !required {
-						params := make([]reflect.Value, 2)
-						params[0] = reflect.ValueOf(v.FieldName)
-						params[1] = reflect.ValueOf(v.FieldValue)
-
-						result = reflect.ValueOf(r).MethodByName(strings.Title("required")).Call(params)
-						if e := result[0].Interface(); e == nil {
-							eStack = append(eStack, Errors{
-								Code:   v.FieldName + ":" + t,
-								Detail: fmt.Sprintf("%v", e),
-							})
-						}
+					} else {
+						return []Errors{}
 					}
 				}
 			}

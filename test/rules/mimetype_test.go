@@ -114,7 +114,7 @@ func TestValidMimetypeNoData(t *testing.T) {
 		File: &multipart.FileHeader{},
 	})
 
-	if eStack != nil {
+	if eStack == nil {
 		t.Error("mimetype should be valid")
 		return
 	}

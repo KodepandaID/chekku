@@ -60,7 +60,7 @@ func TestMinLengthValidNoData(t *testing.T) {
 		text: "",
 	})
 
-	if e != nil {
+	if e == nil {
 		t.Error("minLength shoud be valid")
 		return
 	}

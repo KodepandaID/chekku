@@ -75,7 +75,7 @@ func TestValidMinNumberNoData(t *testing.T) {
 		number: 0,
 	})
 
-	if e != nil {
+	if e == nil {
 		t.Error("minNumber shoud be valid")
 		return
 	}
