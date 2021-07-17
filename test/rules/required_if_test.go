@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/KodepandaID/chekku"
@@ -15,6 +16,7 @@ func TestInvalidBoolRequiredIf(t *testing.T) {
 	e := chekku.Validate(Text{
 		text0: true,
 	})
+	fmt.Println(e)
 
 	if e == nil {
 		t.Error("required should be invalid")
