@@ -139,3 +139,54 @@ func TestValidStringRequiredIf(t *testing.T) {
 		return
 	}
 }
+
+func TestMultipleValidationRequiredIf(t *testing.T) {
+	type Text struct {
+		text0 string
+		text1 string `chekku:"requiredIf:text0,hello|isNumeric"`
+	}
+
+	e := chekku.Validate(Text{
+		text0: "hello123",
+		text1: "",
+	})
+
+	if len(e) > 0 {
+		t.Error("required should be valid")
+		return
+	}
+}
+
+func TestMultipleValidationRequiredIf2(t *testing.T) {
+	type Text struct {
+		text0 string
+		text1 string `chekku:"requiredIf:text0,hello|isNumeric"`
+	}
+
+	e := chekku.Validate(Text{
+		text0: "hello",
+		text1: "hello",
+	})
+
+	if len(e) > 0 {
+		t.Error("required should be valid")
+		return
+	}
+}
+
+func TestMultipleValidationRequiredIf3(t *testing.T) {
+	type Text struct {
+		text0 string
+		text1 string `chekku:"requiredIf:text0,hello|isNumeric"`
+	}
+
+	e := chekku.Validate(Text{
+		text0: "hello",
+		text1: "123",
+	})
+
+	if len(e) > 0 {
+		t.Error("required should be valid")
+		return
+	}
+}

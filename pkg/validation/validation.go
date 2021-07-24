@@ -42,6 +42,11 @@ func Validate(inputs interface{}) []Errors {
 					params[2] = reflect.ValueOf(tagVar[1])
 
 					result = reflect.ValueOf(r).MethodByName(strings.Title(tagVar[0])).Call(params)
+					if strings.Contains(tagVar[0], "required") {
+						if result[0].IsNil() {
+							required = false
+						}
+					}
 				} else if len(tagVar) == 3 {
 					params := make([]reflect.Value, 4)
 					params[0] = reflect.ValueOf(v.FieldName)
